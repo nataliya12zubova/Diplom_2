@@ -8,6 +8,7 @@ public class UserCredentials {
 
     public UserCredentials () {
     }
+
     public UserCredentials(String email, String password) {
         this.email = email;
         this.password = password;
@@ -20,6 +21,13 @@ public class UserCredentials {
     public UserCredentials setEmail (String email){
         this.email = email;
         return this;
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public UserCredentials setPassword (String password) {

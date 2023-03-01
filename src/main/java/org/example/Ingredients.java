@@ -2,15 +2,12 @@ package org.example;
 
 import com.github.javafaker.Faker;
 import io.restassured.response.ValidatableResponse;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static io.restassured.RestAssured.given;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
-public class Ingredients extends RestAssuredClient {
-    private static final String INGREDIENTS_PATH = "api/ingredients";
+public class Ingredients {
+    static OrderClient orderClient= new OrderClient();
     public ArrayList<Object> ingredients;
     public static Faker faker = new Faker();
 
@@ -19,13 +16,7 @@ public class Ingredients extends RestAssuredClient {
     }
 
     public static Ingredients getRandomBurger(){
-        ValidatableResponse response = given()
-                .spec(getBaseSpec())
-                .when()
-                .get(INGREDIENTS_PATH)
-                .then()
-                .statusCode(200);
-
+        ValidatableResponse response =orderClient.getRandomBurger();
         ArrayList<Object> ingredients = new ArrayList<>();
         int bunIndex = nextInt(0,2);
         int mainIndex = nextInt(0,9);

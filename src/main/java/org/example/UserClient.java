@@ -39,8 +39,8 @@ public class UserClient extends RestAssuredClient {
                 .then();
     }
     @Step ("Удаление пользователя")
-    public static ValidatableResponse delete(String bearerToken) {
-        return given()
+    public static void delete(String bearerToken) {
+        given()
                 .spec(getBaseSpec())
                 .auth().oauth2(bearerToken)
                 .when()

@@ -7,6 +7,7 @@ import static io.restassured.RestAssured.given;
 
 public class OrderClient extends RestAssuredClient {
     private static final String ORDER_PATH = "api/orders";
+    private static final String INGREDIENTS_PATH = "api/ingredients";
 
     @Step("Создание заказа")
     public ValidatableResponse create (String token, Ingredients ingredients){
@@ -36,6 +37,15 @@ public class OrderClient extends RestAssuredClient {
                 .when()
                 .get(ORDER_PATH)
                 .then();
+    }
+    @Step  ("Список ингредиентов")
+    public ValidatableResponse getRandomBurger() {
+        return given()
+                .spec(getBaseSpec())
+                .when()
+                .get(INGREDIENTS_PATH)
+                .then()
+                .statusCode(200);
     }
 }
 
