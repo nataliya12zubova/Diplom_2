@@ -3,8 +3,8 @@ package org.example;
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class UserCredentials {
-    public String email;
-    public String password;
+    private String email;
+    private String password;
 
     public UserCredentials () {
     }
@@ -15,7 +15,7 @@ public class UserCredentials {
     }
 
     public static UserCredentials from(User user) {
-        return new UserCredentials(user.email, user.password);
+        return new UserCredentials(user.getEmail(), user.getPassword());
     }
 
     public UserCredentials setEmail (String email){
@@ -36,17 +36,17 @@ public class UserCredentials {
     }
 
     public static UserCredentials getCredentialsWithEmailOnly (User user) {
-        return new UserCredentials().setEmail(user.email);
+        return new UserCredentials().setEmail(user.getEmail());
     }
     public static UserCredentials getCredentialsWithPasswordOnly (User user) {
-        return new UserCredentials().setPassword(user.password);
+        return new UserCredentials().setPassword(user.getPassword());
     }
 
     public static UserCredentials getCredentialsWithRandomEmail (User user) {
-        return new UserCredentials(RandomStringUtils.randomAlphabetic(6) + "@gmail.com", user.password);
+        return new UserCredentials(RandomStringUtils.randomAlphabetic(6) + "@gmail.com", user.getPassword());
     }
 
     public static UserCredentials getCredentialsWithRandomPassword (User user) {
-        return new UserCredentials(user.email, RandomStringUtils.randomAlphabetic(6));
+        return new UserCredentials(user.getEmail(), RandomStringUtils.randomAlphabetic(6));
     }
 }

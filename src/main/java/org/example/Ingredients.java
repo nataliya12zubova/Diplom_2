@@ -7,7 +7,7 @@ import java.util.List;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 public class Ingredients {
-    static OrderClient orderClient= new OrderClient();
+    static OrderClient orderClient = new OrderClient();
     public ArrayList<Object> ingredients;
     public static Faker faker = new Faker();
 

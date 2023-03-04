@@ -3,19 +3,23 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.example.User;
 import org.example.UserClient;
+import org.example.UserCredentials;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(Parameterized.class)
 public class UserCreateRequestValidationTest {
 
     private final User user;
+    private UserClient userClient;
     private final int expectedStatus;
     private final String expectedErrorMessage;
     private String bearerToken;
+    private String accessToken;
 
 
     public UserCreateRequestValidationTest(User user, int expectedStatus, String expectedErrorMessage) {
@@ -34,6 +38,10 @@ public class UserCreateRequestValidationTest {
     }
     @After
     public void tearDown() {
+        if (accessToken != null) {
+            UserClient.delete(accessToken);
+        }
+
         UserClient.delete(bearerToken);
     }
 
@@ -45,6 +53,11 @@ public class UserCreateRequestValidationTest {
         bearerToken = "";
         String actualMessage = response.extract().path("message");
         int code = response.extract().statusCode();
+
+        if (code == 200) {
+            accessToken = userClient.login(UserCredentials.from(user)).extract().path("accessToken");
+        }
+
         assertEquals (expectedErrorMessage, actualMessage);
         assertEquals (expectedStatus, code);
     }
