@@ -9,18 +9,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 @RunWith(Parameterized.class)
 public class UserCreateRequestValidationTest {
 
     private final User user;
-    private UserClient userClient;
     private final int expectedStatus;
     private final String expectedErrorMessage;
+
     private String bearerToken;
     private String accessToken;
-
 
     public UserCreateRequestValidationTest(User user, int expectedStatus, String expectedErrorMessage) {
         this.user = user;
@@ -38,10 +36,6 @@ public class UserCreateRequestValidationTest {
     }
     @After
     public void tearDown() {
-        if (accessToken != null) {
-            UserClient.delete(accessToken);
-        }
-
         UserClient.delete(bearerToken);
     }
 
@@ -53,12 +47,14 @@ public class UserCreateRequestValidationTest {
         bearerToken = "";
         String actualMessage = response.extract().path("message");
         int code = response.extract().statusCode();
-
-        if (code == 200) {
-            accessToken = userClient.login(UserCredentials.from(user)).extract().path("accessToken");
+        if (response.extract().statusCode() == 200) {
+            System.out.println("Пользователь не должен был создаться!");
+            UserClient userClient = new UserClient();
+            bearerToken = userClient.login(UserCredentials.from(user)).extract().path("accessToken").toString().split(" ")[1];
+            userClient.delete(bearerToken);
         }
-
         assertEquals (expectedErrorMessage, actualMessage);
         assertEquals (expectedStatus, code);
     }
 }
+

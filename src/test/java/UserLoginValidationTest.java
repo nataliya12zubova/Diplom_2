@@ -1,5 +1,6 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import org.example.User;
 import org.example.UserClient;
@@ -21,6 +22,8 @@ public class UserLoginValidationTest {
     private String accessToken;
     private String bearerToken;
 
+    private Response response;
+
     public UserLoginValidationTest(UserCredentials userCredentials, int expectedStatus, String expectedErrorMessage) {
         this.userCredentials = userCredentials;
         this.expectedStatus = expectedStatus;
@@ -39,13 +42,13 @@ public class UserLoginValidationTest {
 
     @After
     public void tearDown() {
-        UserClient.delete(bearerToken);
+        userClient.delete(bearerToken);
     }
 
     @Test
     @DisplayName("Для авторизации нужно передать все обязательные поля")
     @Description("Если нет Email, если нет Password, если неправильно указать Email,если неправильно указать Password - система вернёт ошибку")
-    public void LoginValidationTest () {
+    public void loginValidationTest () {
         ValidatableResponse response = userClient.create(user);
         ValidatableResponse login = new UserClient().login(userCredentials);
         accessToken = response.extract().path("accessToken");

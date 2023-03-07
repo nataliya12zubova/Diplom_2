@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import io.qameta.allure.internal.shadowed.jackson.annotation.JsonInclude;
 import io.restassured.response.ValidatableResponse;
 import static io.restassured.RestAssured.given;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 public class UserClient extends RestAssuredClient {
@@ -38,9 +39,10 @@ public class UserClient extends RestAssuredClient {
                 .patch(USER_PATH + "user")
                 .then();
     }
+
     @Step ("Удаление пользователя")
-    public static void delete(String bearerToken) {
-        given()
+    public static ValidatableResponse delete(String bearerToken){
+        return given()
                 .spec(getBaseSpec())
                 .auth().oauth2(bearerToken)
                 .when()
@@ -48,3 +50,4 @@ public class UserClient extends RestAssuredClient {
                 .then();
     }
 }
+

@@ -51,14 +51,17 @@ public class User {
     }
 
     public static User getUserWithoutName() {
-        return new User().setEmail(RandomStringUtils.randomAlphabetic(6) + "@gmail.com").setPassword(RandomStringUtils.randomAlphabetic(6));
+        return new User().setEmail(RandomStringUtils.randomAlphabetic(6) + "@gmail.com")
+                .setPassword(RandomStringUtils.randomAlphabetic(6));
     }
 
     public static User getUserWithoutPassword() {
-        return new User().setEmail(RandomStringUtils.randomAlphabetic(6) + "@gmail.com").setName(RandomStringUtils.randomAlphabetic(6));
+        return new User().setEmail(RandomStringUtils.randomAlphabetic(6) + "@gmail.com")
+                .setName(RandomStringUtils.randomAlphabetic(6));
     }
 
     public static User getUserWithoutEmail() {
-        return new User().setPassword(RandomStringUtils.randomAlphabetic(6)).setName(RandomStringUtils.randomAlphabetic(6));
+        return new User().setPassword(RandomStringUtils.randomAlphabetic(6))
+                .setName(RandomStringUtils.randomAlphabetic(6));
     }
 }

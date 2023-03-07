@@ -7,13 +7,23 @@ import java.util.List;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 public class Ingredients {
-    static OrderClient orderClient = new OrderClient();
-    public ArrayList<Object> ingredients;
-    public static Faker faker = new Faker();
+    private ArrayList<Object> ingredients;
 
-    public Ingredients(ArrayList<Object> ingredients){
+    public ArrayList<Object> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(ArrayList<Object> ingredients) {
         this.ingredients = ingredients;
     }
+
+    public Ingredients (ArrayList<Object> ingredients) {
+        this.ingredients = ingredients;
+    }
+    public Ingredients() {
+    }
+    static OrderClient orderClient = new OrderClient();
+    public static Faker faker = new Faker();
 
     public static Ingredients getRandomBurger(){
         ValidatableResponse response =orderClient.getRandomBurger();
